@@ -1,0 +1,37 @@
+# Periodically Perform Speedtest
+# https://home-assistant.io/components/sensor.speedtest/
+sensor speedtest:
+  - platform: speedtest
+    minute:
+      - 0
+      - 30
+    monitored_conditions:
+      - ping
+      - download
+
+
+# Automation(s) To Update Gauges Based On Speedtest Results
+# https://home-assistant.io/components/automation/
+automation 1:
+  - alias: run_set_gauge_ping
+    trigger:
+      platform: state
+      entity_id: sensor.speedtest_ping
+    action:
+      service: shell_command.set_gauge_ping
+
+automation 2:
+  - alias: run_set_gauge_download
+    trigger:
+      platform: state
+      entity_id: sensor.speedtest_download
+    action:
+      service: shell_command.set_gauge_dlspeed
+
+
+# Update Gauges Via Particle Cloud API
+# https://home-assistant.io/components/shell_command/
+# Don't forget to replace YOUR_DEVICE_ID and YOUR_API_KEY with values relevant to your setup!
+shell_command:
+  set_gauge_ping: curl https://api.particle.io/v1/devices/YOUR_DEVICE_ID/updateGauge -d arg="0;{{ states.sensor.speedtest_ping.state }}" -d access_token=YOUR_API_KEY
+  set_gauge_dlspeed: curl https://api.particle.io/v1/devices/YOUR_DEVICE_ID/updateGauge -d arg="1;{{ states.sensor.speedtest_download.state }}" -d access_token=YOUR_API_KEY
