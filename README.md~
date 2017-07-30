@@ -1,7 +1,7 @@
 # AnalogGauges
 Weekend project to turn some analog gauges I picked up at a surplus store into something useful.
 
-![Gauge Assembly](/Images/FullAssembly_Front.jpg?raw=true "Gauge Assembly")
+![Gauge Assembly](/Images/FullAssembly.jpg?raw=true "Gauge Assembly")
 
 These gauges serve as a desk ornament indicating current internet download speed and latency.  A [Particle Photon](https://store.particle.io/products/photon) to drives the gauges and is coupled with [HomeAssistant](https://home-assistant.io/) to run periodic speedtests.
 
